@@ -18,8 +18,13 @@ A production-grade, serverless URL shortener built with AWS services. Features r
 
 **🔗 Try LinkForge Pro Now:**
 - **Main Application**: [http://url-shortener-infra-frontend-264449293739.s3-website-us-east-1.amazonaws.com](http://url-shortener-infra-frontend-264449293739.s3-website-us-east-1.amazonaws.com)
+<img width="1440" height="900" alt="Screenshot 2025-12-19 at 5 09 54 PM" src="https://github.com/user-attachments/assets/c69bbb89-658a-44e2-ae94-6b65af8f9fea" />
+
+
+
 - **Admin Dashboard**: [http://url-shortener-infra-frontend-264449293739.s3-website-us-east-1.amazonaws.com/admin.html](http://url-shortener-infra-frontend-264449293739.s3-website-us-east-1.amazonaws.com/admin.html)
-- **API Endpoint**: `https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev`
+<img width="1440" height="900" alt="Screenshot 2025-12-19 at 5 10 04 PM" src="https://github.com/user-attachments/assets/d8c922dc-cf6b-4367-8d6a-f6b4042d2a91" />
+
 
 **Status**: ✅ **Fully Operational** | **Production Ready** | **Real-time Analytics**
 
