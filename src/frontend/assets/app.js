@@ -2,7 +2,7 @@
 // Configuration - Will be updated when backend is ready
 const CONFIG = {
     API_BASE_URL: 'https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev',
-    DEMO_MODE: true, // Start in demo mode, will try backend and fallback gracefully
+    DEMO_MODE: false, // Start in demo mode, will try backend and fallback gracefully
     SHORT_DOMAIN: 'short.ly',
     AUTO_FALLBACK: true // Automatically switch to demo mode if backend fails
 };
