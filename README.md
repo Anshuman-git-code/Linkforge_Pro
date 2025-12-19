@@ -10,9 +10,8 @@ A production-grade, serverless URL shortener built with AWS services. Features r
 
 ## 🎥 Demo Video
 
-> **Coming Soon**: Live demonstration of LinkForge Pro features and functionality
-> 
-> *This section will showcase the complete application workflow, from URL shortening to analytics dashboard.*
+https://github.com/user-attachments/assets/f3847373-2316-45f1-81e2-09735948c621
+
 
 ## 🌐 Live Application
 
