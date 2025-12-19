@@ -1,0 +1,35 @@
+{
+  "environment": "staging",
+  "aws": {
+    "region": "us-east-1",
+    "stackName": "url-shortener-staging",
+    "apiGateway": {
+      "baseUrl": "https://staging-api.example.com/dev"
+    },
+    "dynamodb": {
+      "tableName": "url-shortener-staging-links"
+    },
+    "s3": {
+      "bucketName": "url-shortener-staging-frontend",
+      "websiteUrl": "http://staging.example.com"
+    }
+  },
+  "frontend": {
+    "demoMode": false,
+    "shortDomain": "staging.short.ly",
+    "autoFallback": true
+  },
+  "features": {
+    "customCodes": true,
+    "analytics": true,
+    "qrCodes": true,
+    "adminDashboard": true,
+    "testMode": true
+  },
+  "limits": {
+    "maxUrlLength": 2048,
+    "maxCustomCodeLength": 50,
+    "minCustomCodeLength": 3,
+    "maxLinksPerUser": 500
+  }
+}

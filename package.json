@@ -1,0 +1,66 @@
+{
+  "name": "linkforge-pro",
+  "version": "1.0.0",
+  "description": "Enterprise-grade serverless URL shortener built with AWS services",
+  "main": "src/frontend/assets/app.js",
+  "scripts": {
+    "deploy": "./scripts/deploy/deploy-all.sh production",
+    "deploy:dev": "./scripts/deploy/deploy-all.sh development",
+    "deploy:staging": "./scripts/deploy/deploy-all.sh staging",
+    "deploy:infrastructure": "./scripts/deploy/deploy-infrastructure.sh production",
+    "deploy:backend": "python3 scripts/deploy/deploy-backend.py production",
+    "deploy:frontend": "node scripts/deploy/deploy-frontend.js production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:backend": "python3 -m pytest tests/backend/",
+    "test:frontend": "echo \"Frontend tests not implemented yet\"",
+    "lint": "echo \"Linting not configured yet\"",
+    "validate": "aws cloudformation validate-template --template-body file://infrastructure/cloudformation/infrastructure.yaml",
+    "local:frontend": "cd src/frontend && python3 -m http.server 8000",
+    "docs": "echo \"Documentation server not configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/linkforge-pro.git"
+  },
+  "keywords": [
+    "url-shortener",
+    "serverless",
+    "aws",
+    "lambda",
+    "api-gateway",
+    "dynamodb",
+    "analytics",
+    "qr-codes",
+    "enterprise"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/linkforge-pro/issues"
+  },
+  "homepage": "https://github.com/yourusername/linkforge-pro#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "python": ">=3.9.0"
+  },
+  "devDependencies": {},
+  "dependencies": {},
+  "aws": {
+    "region": "us-east-1",
+    "runtime": "python3.9"
+  },
+  "contributors": [
+    {
+      "name": "Anshuman",
+      "role": "Infrastructure & Backend"
+    },
+    {
+      "name": "Shivam", 
+      "role": "Backend Development"
+    },
+    {
+      "name": "Siddhant",
+      "role": "Frontend Development"
+    }
+  ]
+}

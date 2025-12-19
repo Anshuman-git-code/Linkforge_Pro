@@ -1,0 +1,41 @@
+{
+  "environment": "production",
+  "aws": {
+    "region": "us-east-1",
+    "stackName": "url-shortener-infra",
+    "apiGateway": {
+      "baseUrl": "https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev"
+    },
+    "dynamodb": {
+      "tableName": "url-shortener-infra-links"
+    },
+    "s3": {
+      "bucketName": "url-shortener-infra-frontend-264449293739",
+      "websiteUrl": "http://url-shortener-infra-frontend-264449293739.s3-website-us-east-1.amazonaws.com"
+    },
+    "lambda": {
+      "functions": {
+        "createLink": "url-shortener-infra-CreateLinkFunction-Ej8Ej8Ej8Ej8",
+        "redirectLink": "url-shortener-infra-RedirectLinkFunction-Ej8Ej8Ej8Ej8",
+        "adminLinks": "url-shortener-infra-AdminLinksFunction-Ej8Ej8Ej8Ej8"
+      }
+    }
+  },
+  "frontend": {
+    "demoMode": false,
+    "shortDomain": "short.ly",
+    "autoFallback": true
+  },
+  "features": {
+    "customCodes": true,
+    "analytics": true,
+    "qrCodes": true,
+    "adminDashboard": true
+  },
+  "limits": {
+    "maxUrlLength": 2048,
+    "maxCustomCodeLength": 50,
+    "minCustomCodeLength": 3,
+    "maxLinksPerUser": 1000
+  }
+}

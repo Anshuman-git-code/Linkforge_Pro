@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LinkForge Pro</h1>
+            <p>Professional URL Shortening Platform with Advanced Analytics and Enterprise Security</p>
+        </header>
+
+        <main>
+            <!-- URL Shortening Form -->
+            <div class="url-form">
+                <form id="shortenForm">
+                    <div class="input-group">
+                        <input 
+                            type="url" 
+                            id="urlInput" 
+                            placeholder="Enter your long URL here..."
+                            required
+                        >
+                        <input 
+                            type="text" 
+                            id="customCodeInput" 
+                            placeholder="Custom code (optional)"
+                            maxlength="50"
+                        >
+                    </div>
+                    <button type="submit" id="shortenBtn">
+                        <span id="btnText">Shorten URL</span>
+                        <span id="btnLoader" class="loader hidden">⏳</span>
+                    </button>
+                </form>
+                
+                <!-- Demo Mode Notice -->
+                <div class="demo-notice">
+                    <p><strong>Smart Mode:</strong> Automatically detects backend availability. Currently running in demo mode with full functionality.</p>
+                </div>
+            </div>
+
+            <!-- Result Display -->
+            <div id="result" class="result hidden">
+                <div class="result-content">
+                    <h3>Short link created successfully</h3>
+                    <div class="short-url">
+                        <input type="text" id="shortUrlInput" readonly>
+                        <button id="copyBtn">Copy</button>
+                    </div>
+                    <div class="qr-code">
+                        <canvas id="qrCanvas"></canvas>
+                    </div>
+                    <div class="link-stats">
+                        <span class="stat">Clicks: <span id="clickCount">0</span></span>
+                        <span class="stat">Created: <span id="createdDate">just now</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Links -->
+            <div class="recent-links">
+                <h3>Recent Links</h3>
+                <div id="recentLinksList">
+                    <p class="empty-state">No recent links</p>
+                </div>
+                <button id="clearHistoryBtn" class="clear-btn hidden">Clear History</button>
+            </div>
+        </main>
+
+        <footer>
+            <a href="admin.html">Analytics Dashboard</a>
+            <span class="divider">|</span>
+            <a href="#" id="aboutBtn">About LinkForge</a>
+        </footer>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>About LinkForge</h2>
+            <p>An enterprise-grade URL shortening platform engineered for performance, reliability, and scalability.</p>
+            <ul>
+                <li><strong>Cloud Infrastructure:</strong> AWS Lambda, API Gateway, DynamoDB</li>
+                <li><strong>Backend Services:</strong> Python microservices with boto3</li>
+                <li><strong>Frontend Technology:</strong> Modern JavaScript & CSS3</li>
+                <li><strong>Enterprise Features:</strong> Custom domains, QR generation, advanced analytics</li>
+            </ul>
+            <p><em>Developed by: Anshuman, Shivam & Siddhant</em></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" onerror="console.error('QR Code library failed to load from jsdelivr')"></script>
+    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js" onerror="console.error('QR Code library failed to load from unpkg')"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

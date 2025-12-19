@@ -1,0 +1,35 @@
+{
+  "environment": "development",
+  "aws": {
+    "region": "us-east-1",
+    "stackName": "url-shortener-dev",
+    "apiGateway": {
+      "baseUrl": "https://localhost:3000/dev"
+    },
+    "dynamodb": {
+      "tableName": "url-shortener-dev-links"
+    },
+    "s3": {
+      "bucketName": "url-shortener-dev-frontend",
+      "websiteUrl": "http://localhost:3000"
+    }
+  },
+  "frontend": {
+    "demoMode": true,
+    "shortDomain": "localhost:3000",
+    "autoFallback": true
+  },
+  "features": {
+    "customCodes": true,
+    "analytics": true,
+    "qrCodes": true,
+    "adminDashboard": true,
+    "debugMode": true
+  },
+  "limits": {
+    "maxUrlLength": 2048,
+    "maxCustomCodeLength": 50,
+    "minCustomCodeLength": 3,
+    "maxLinksPerUser": 100
+  }
+}
