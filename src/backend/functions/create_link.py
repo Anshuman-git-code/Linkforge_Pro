@@ -162,7 +162,7 @@ def lambda_handler(event, context):
             'body': json.dumps({
                 'success': True,
                 'shortCode': short_code,
-                'shortUrl': f"https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev/{short_code}",
+                'shortUrl': f"https://{event.get('requestContext', {}).get('domainName', 'localhost')}/{short_code}",
                 'targetUrl': url,
                 'createdAt': timestamp
             })

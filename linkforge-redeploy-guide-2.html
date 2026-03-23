@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkForge Pro – Interview Redeployment Guide</title>
+<style>
+  :root {
+    --blue: #2563eb; --blue-light: #eff6ff; --blue-dark: #1e40af;
+    --green: #059669; --green-light: #ecfdf5;
+    --orange: #d97706; --orange-light: #fffbeb;
+    --red: #dc2626; --red-light: #fef2f2;
+    --purple: #7c3aed; --purple-light: #f5f3ff;
+    --gray: #6b7280; --gray-light: #f9fafb; --gray-border: #e5e7eb;
+    --text: #111827; --text-muted: #6b7280; --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f1f5f9; color: var(--text); line-height: 1.7; }
+
+  .hero { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0ea5e9 100%); color: white; padding: 3rem 2rem 2.5rem; text-align: center; }
+  .hero h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; }
+  .hero .subtitle { font-size: 1.05rem; opacity: 0.85; margin-top: 0.5rem; }
+  .badge-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.2rem; }
+  .badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 0.8rem; font-weight: 600; }
+
+  .wrapper { max-width: 980px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+  .toc { background: white; border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem 2rem; margin-bottom: 2rem; }
+  .toc h2 { font-size: 0.9rem; font-weight: 700; color: var(--blue-dark); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .toc ol { padding-left: 1.4rem; }
+  .toc li { margin-bottom: 0.4rem; }
+  .toc a { color: var(--blue); text-decoration: none; font-weight: 500; font-size: 0.93rem; }
+  .toc a:hover { text-decoration: underline; }
+
+  .section { background: white; border: 1px solid var(--gray-border); border-radius: var(--radius); margin-bottom: 2rem; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.8rem; border-bottom: 1px solid var(--gray-border); background: var(--gray-light); }
+  .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+  .section-title { font-size: 1.15rem; font-weight: 700; color: var(--blue-dark); }
+  .section-body { padding: 1.6rem 1.8rem; }
+
+  .step { border: 1px solid var(--gray-border); border-radius: 8px; margin-bottom: 1.8rem; overflow: hidden; }
+  .step-header { display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; background: #f8fafc; border-bottom: 1px solid var(--gray-border); }
+  .step-num { background: var(--blue); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0; }
+  .step-title { font-weight: 700; color: var(--text); font-size: 1rem; }
+  .step-body { padding: 1.2rem 1.4rem; }
+
+  .explain { background: #fafafa; border-left: 4px solid var(--blue); border-radius: 0 6px 6px 0; padding: 1rem 1.2rem; margin: 1rem 0; font-size: 0.92rem; }
+  .explain h5 { font-size: 0.8rem; font-weight: 700; color: var(--blue-dark); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+  .explain p { color: #374151; margin-bottom: 0.5rem; }
+  .explain p:last-child { margin-bottom: 0; }
+
+  .why-here { background: var(--purple-light); border-left: 4px solid var(--purple); border-radius: 0 6px 6px 0; padding: 1rem 1.2rem; margin: 1rem 0; font-size: 0.92rem; }
+  .why-here h5 { font-size: 0.8rem; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+  .why-here p { color: #3b0764; margin-bottom: 0.5rem; }
+  .why-here p:last-child { margin-bottom: 0; }
+
+  .cmd-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 0.8rem 0; }
+  .cmd-table th { background: #1e293b; color: #e2e8f0; padding: 0.5rem 0.9rem; text-align: left; font-weight: 700; }
+  .cmd-table td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--gray-border); vertical-align: top; }
+  .cmd-table td:first-child { font-family: 'Cascadia Code','Fira Code','Consolas',monospace; font-size: 0.82rem; background: #f8fafc; color: #0f172a; white-space: nowrap; font-weight: 600; }
+  .cmd-table tr:last-child td { border-bottom: none; }
+
+  pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1.1rem 1.3rem; overflow-x: auto; font-size: 0.84rem; line-height: 1.75; margin: 0.8rem 0; }
+  code { font-family: 'Cascadia Code','Fira Code','Consolas',monospace; }
+  .inline-code { background: #f1f5f9; color: #0f172a; padding: 0.15em 0.45em; border-radius: 4px; font-size: 0.87em; font-family: 'Cascadia Code','Fira Code','Consolas',monospace; border: 1px solid #e2e8f0; }
+
+  .callout { border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; display: flex; gap: 0.8rem; }
+  .callout-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .callout-body { font-size: 0.92rem; }
+  .callout-body strong { display: block; margin-bottom: 0.3rem; }
+  .tip    { background: var(--green-light); border: 1px solid #a7f3d0; }
+  .warn   { background: var(--orange-light); border: 1px solid #fcd34d; }
+  .danger { background: var(--red-light); border: 1px solid #fca5a5; }
+  .info   { background: var(--blue-light); border: 1px solid #bfdbfe; }
+
+  .arch { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; padding: 1.5rem 0; }
+  .arch-box { background: var(--blue-light); border: 2px solid var(--blue); border-radius: 8px; padding: 0.6rem 1rem; text-align: center; font-size: 0.82rem; font-weight: 700; color: var(--blue-dark); min-width: 90px; }
+  .arch-arrow { color: var(--gray); font-size: 1.4rem; padding: 0 0.3rem; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0.8rem 0; }
+  .data-table th { background: var(--blue); color: white; padding: 0.6rem 1rem; text-align: left; font-weight: 700; }
+  .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--gray-border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--gray-light); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-border); font-size: 0.93rem; }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box { width: 20px; height: 20px; border: 2px solid var(--gray-border); border-radius: 4px; flex-shrink: 0; margin-top: 2px; background: white; }
+  .phase-label { font-size: 0.72rem; background: var(--blue); color: white; border-radius: 999px; padding: 0.1rem 0.5rem; font-weight: 700; flex-shrink: 0; margin-top: 3px; }
+
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:600px){ .tips-grid { grid-template-columns: 1fr; } }
+  .tip-card { background: var(--green-light); border: 1px solid #a7f3d0; border-radius: 8px; padding: 1rem; }
+  .tip-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--green); margin-bottom: 0.4rem; }
+  .tip-card p  { font-size: 0.87rem; color: #065f46; }
+
+  hr { border: none; border-top: 1px solid var(--gray-border); margin: 1.2rem 0; }
+  .footer { text-align: center; padding: 2rem; color: var(--gray); font-size: 0.85rem; }
+  .sequence-note { background: #fef9c3; border: 1px solid #fde047; border-radius: 8px; padding: 0.9rem 1.1rem; font-size: 0.88rem; color: #713f12; margin-bottom: 1.2rem; }
+  .sequence-note strong { color: #92400e; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🔗 LinkForge Pro</h1>
+  <div class="subtitle">Interview Redeployment Guide — Every step explained with full context</div>
+  <div class="badge-row">
+    <span class="badge">AWS Lambda</span><span class="badge">API Gateway</span>
+    <span class="badge">DynamoDB</span><span class="badge">S3 Static</span>
+    <span class="badge">CloudFormation</span><span class="badge">Python 3.9</span>
+    <span class="badge">Vanilla JS</span>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#architecture">Architecture Overview</a></li>
+    <li><a href="#prereqs">Prerequisites &amp; One-time Setup</a></li>
+    <li><a href="#phase1">Phase 1 — Infrastructure (CloudFormation)</a></li>
+    <li><a href="#phase2">Phase 2 — Backend (Lambda Functions)</a></li>
+    <li><a href="#phase3">Phase 3 — Frontend (S3 Static Site)</a></li>
+    <li><a href="#verify">Verification &amp; Testing</a></li>
+    <li><a href="#schema">DynamoDB Schema Reference</a></li>
+    <li><a href="#api">API Endpoints Reference</a></li>
+    <li><a href="#troubleshoot">Troubleshooting Quick Fixes</a></li>
+    <li><a href="#interview">Interview Master Checklist</a></li>
+    <li><a href="#talking">Talking Points for Interviewers</a></li>
+  </ol>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section" id="architecture">
+  <div class="section-header"><div class="section-num">1</div><div class="section-title">Architecture Overview — Understand This Before Touching Anything</div></div>
+  <div class="section-body">
+    <div class="explain">
+      <h5>Why read architecture first?</h5>
+      <p>Every command you run is just making one box in this diagram real. If you understand what each box is and why it connects to the next one, you will never be lost when something fails — you will know exactly which layer to look at.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-box">🌐 Browser<br><small>S3 Static Site</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box">🚪 API Gateway<br><small>HTTP API</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box">⚡ Lambda<br><small>3 Functions</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box">🗄️ DynamoDB<br><small>NoSQL Table</small></div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Component</th><th>AWS Service</th><th>Purpose</th><th>Key Config</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frontend</strong></td><td>S3 Static Website</td><td>Serve HTML/CSS/JS — no server needed, S3 acts as a web host</td><td>Public read, index.html as entry</td></tr>
+        <tr><td><strong>API Layer</strong></td><td>API Gateway (HTTP v2)</td><td>Single front door — routes requests to the right Lambda based on URL and method</td><td>CORS all origins, 3 routes</td></tr>
+        <tr><td><strong>Create Link</strong></td><td>Lambda Python 3.9</td><td>Validates URL, generates/checks short code, writes to DynamoDB</td><td>POST /links → 201</td></tr>
+        <tr><td><strong>Redirect</strong></td><td>Lambda Python 3.9</td><td>Looks up short code, increments click count, returns 301 redirect</td><td>GET /{code} → 301</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Lambda Python 3.9</td><td>Scans all DynamoDB records, calculates stats, returns to dashboard</td><td>GET /admin/links → 200</td></tr>
+        <tr><td><strong>Database</strong></td><td>DynamoDB on-demand</td><td>NoSQL key-value — PK is the short code so every lookup is O(1)</td><td>PK = code (String)</td></tr>
+        <tr><td><strong>IaC</strong></td><td>CloudFormation</td><td>Defines every resource as YAML — entire infra in one command</td><td>infrastructure.yaml</td></tr>
+        <tr><td><strong>Logs</strong></td><td>CloudWatch</td><td>Lambda print() output streams here automatically — essential for debugging</td><td>14-day retention, 3 groups</td></tr>
+      </tbody>
+    </table>
+    <div class="callout info">
+      <div class="callout-icon">🔗</div>
+      <div class="callout-body"><strong>The deployment sequence exists because of hard dependencies:</strong> Phase 1 (CloudFormation) must go first — it creates DynamoDB, the IAM role for Lambda, and the API Gateway shell that Phase 2 needs. Phase 2 (Lambda) must go before Phase 3 because the frontend needs the working API URL. You cannot reverse this order.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="prereqs">
+  <div class="section-header"><div class="section-num">2</div><div class="section-title">Prerequisites &amp; One-time Setup</div></div>
+  <div class="section-body">
+    <div class="explain">
+      <h5>Why do these before anything else?</h5>
+      <p>These are the tools and credentials your local machine needs to talk to AWS and run deployment scripts. Without them, every command in this guide will fail instantly. These are done once per machine — never repeated per project.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">Install AWS CLI and verify</div></div>
+      <div class="step-body">
+        <pre><code>aws --version
+# Expected: aws-cli/2.x.x Python/3.x.x ...</code></pre>
+        <div class="explain">
+          <h5>What is AWS CLI and why do you need it?</h5>
+          <p>AWS CLI (Command Line Interface) lets you control every AWS service from your terminal instead of clicking through the web console. Every <span class="inline-code">aws cloudformation deploy</span>, <span class="inline-code">aws lambda create-function</span>, and <span class="inline-code">aws s3 sync</span> command in this guide runs through it. Without CLI, you would have to do every step manually in a browser — slow, error-prone, impossible to automate or repeat. Download from aws.amazon.com/cli if not installed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">Configure AWS credentials</div></div>
+      <div class="step-body">
+        <pre><code>aws configure
+# AWS Access Key ID: &lt;your key&gt;
+# AWS Secret Access Key: &lt;your secret&gt;
+# Default region name: us-east-1
+# Default output format: json
+
+# Always verify after configuring:
+aws sts get-caller-identity</code></pre>
+        <div class="explain">
+          <h5>What does aws configure do?</h5>
+          <p>Stores your Access Key ID and Secret in <span class="inline-code">~/.aws/credentials</span>. Every CLI command after this automatically uses those credentials — you never type them per command. Setting <strong>us-east-1 as default region</strong> is important because all resources in this project (DynamoDB, Lambda, API Gateway, S3) are hardcoded to us-east-1. <strong>Output json</strong> makes CLI responses structured JSON, easier to parse with --query and python3 -m json.tool.</p>
+        </div>
+        <div class="explain">
+          <h5>What does aws sts get-caller-identity do and why run it?</h5>
+          <p>STS = Security Token Service. This asks AWS "who am I?" and returns your Account ID, IAM User ARN, and User ID. It confirms credentials work before you touch anything. If this fails, nothing else will work. You also need the 12-digit <strong>Account ID</strong> it returns later when constructing Lambda ARNs manually in Phase 2.</p>
+        </div>
+        <div class="callout warn">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body"><strong>IAM permissions required on your AWS user:</strong> CloudFormation (full), Lambda (full), API Gateway (full), DynamoDB (full), S3 (full), IAM — create/update roles and policies, CloudWatch Logs — create/write. In an interview environment these are usually pre-granted.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">Verify Node.js and Python versions</div></div>
+      <div class="step-body">
+        <pre><code>node --version    # Must be v16+
+python3 --version # Must be 3.9+</code></pre>
+        <div class="explain">
+          <h5>Why do you need both?</h5>
+          <p><strong>Python 3.9</strong> is the Lambda runtime — your three .py files run as Python inside AWS Lambda. You also need it locally to run deploy-backend.py. <strong>Node.js 16+</strong> runs the deploy-frontend.js script that syncs files to S3 and updates the frontend config. It also powers the npm scripts in package.json.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">4</div><div class="step-title">Clone repo and install dependencies</div></div>
+      <div class="step-body">
+        <pre><code>git clone https://github.com/yourusername/linkforge-pro.git
+cd linkforge-pro
+npm install
+pip3 install boto3</code></pre>
+        <div class="explain">
+          <h5>What does each command do?</h5>
+          <p><strong>git clone</strong> — downloads the entire project: infrastructure.yaml, all three Lambda .py files, the frontend HTML/JS/CSS, and all deploy scripts. <strong>cd linkforge-pro</strong> — critical, all relative paths in subsequent commands (like infrastructure/infrastructure.yaml) assume you are in this root folder. <strong>npm install</strong> — installs Node.js dev dependencies from package.json, enables the npm run shortcuts. <strong>pip3 install boto3</strong> — boto3 is the official AWS SDK for Python. Lambda functions use it to talk to DynamoDB (<span class="inline-code">boto3.resource('dynamodb')</span>). Also needed locally for deploy-backend.py which calls the Lambda API using boto3.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="phase1">
+  <div class="section-header"><div class="section-num">3</div><div class="section-title">Phase 1 — Infrastructure via CloudFormation</div></div>
+  <div class="section-body">
+
+    <div class="sequence-note">
+      <strong>Why Phase 1 must run first:</strong> CloudFormation creates DynamoDB (Lambda must write somewhere), the IAM role (Lambda must have permissions), API Gateway (Lambda needs a front door), and the S3 bucket (frontend needs a home). None of Phase 2 or Phase 3 is possible without Phase 1. This is a hard dependency chain, not a preference.
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">🏗️</div>
+      <div class="callout-body"><strong>What CloudFormation actually is:</strong> Instead of clicking "Create Table" in DynamoDB, "Create API" in API Gateway, etc. manually, you write one YAML file describing every resource. CloudFormation reads it, figures out the creation order based on dependencies, and creates everything. This is Infrastructure as Code (IaC). Benefit: delete and recreate the entire stack identically with one command. No forgetting a setting, no manual clicking.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">Deploy the CloudFormation stack</div></div>
+      <div class="step-body">
+        <pre><code>aws cloudformation deploy \
+  --template-file infrastructure/infrastructure.yaml \
+  --stack-name url-shortener-infra \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --region us-east-1 \
+  --parameter-overrides Environment=dev \
+  --no-fail-on-empty-changeset</code></pre>
+
+        <table class="cmd-table">
+          <thead><tr><th>Flag / Argument</th><th>What it does and why it is here</th></tr></thead>
+          <tbody>
+            <tr><td>aws cloudformation deploy</td><td>Creates or updates a CloudFormation stack. Internally it creates a "change set" (a diff of what will change), shows you, then executes it. If the stack does not exist yet, it creates everything fresh. If it exists, it updates only what changed — safe to run multiple times.</td></tr>
+            <tr><td>--template-file infrastructure/infrastructure.yaml</td><td>Points to the IaC YAML file relative to your current directory. This file defines every resource: DynamoDB table, API Gateway HTTP API, Lambda IAM role, S3 bucket, S3 bucket policy, and 3 CloudWatch Log Groups. CloudFormation reads it and figures out creation order automatically.</td></tr>
+            <tr><td>--stack-name url-shortener-infra</td><td>The name CloudFormation uses to group all your resources. Think of it as a project folder — all resources created by this template are tagged with this stack name. You reference this same name in every later command to get outputs (API URL, bucket name, etc.). Must be unique in your AWS account + region combination.</td></tr>
+            <tr><td>--capabilities CAPABILITY_NAMED_IAM</td><td>An explicit safety acknowledgement required whenever your template creates IAM resources with hardcoded names. Your template has RoleName: url-shortener-infra-lambda-role — an explicitly named IAM role. AWS forces you to acknowledge this because named IAM resources are harder to track and audit. CAPABILITY_IAM (without NAMED) only covers auto-named IAM resources and will fail here.</td></tr>
+            <tr><td>--region us-east-1</td><td>Tells CloudFormation which AWS region to deploy into. All resources will be created in us-east-1 (N. Virginia). The backend Lambda code is also hardcoded to us-east-1 (the DynamoDB client is initialised with region_name='us-east-1'). These must match or Lambda cannot reach DynamoDB.</td></tr>
+            <tr><td>--parameter-overrides Environment=dev</td><td>Passes a value into the template Parameters section. The template uses this as the API Gateway stage name, which becomes the /dev path segment in your API URL (https://id.execute-api.region.amazonaws.com/dev). If you passed Environment=prod, the stage would be /prod.</td></tr>
+            <tr><td>--no-fail-on-empty-changeset</td><td>Normally, if nothing changed in the template and you re-run this command, CloudFormation returns an error saying "no changes." This flag suppresses that error so re-running is always safe — essential in scripts and CI/CD pipelines where you want to guarantee the stack is in sync without checking first.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="explain">
+          <h5>What happens inside AWS when you run this command?</h5>
+          <p>CloudFormation reads your YAML, builds a dependency graph (e.g. S3 BucketPolicy depends on S3 Bucket, Lambda Role depends on nothing), then creates resources in the right order — parallelising where safe. Each resource shows "CREATE_IN_PROGRESS" then "CREATE_COMPLETE". The whole stack takes 2–3 minutes. Resources created: LinksTable (DynamoDB), HttpApi (API Gateway v2), ApiStage (/dev stage), LambdaExecutionRole (IAM), FrontendBucket (S3), FrontendBucketPolicy (public read), and 3 CloudWatch Log Groups.</p>
+        </div>
+
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue hit during deployment: InsufficientCapabilitiesException</strong>
+            <pre><code>An error occurred (InsufficientCapabilitiesException) when calling the
+CreateChangeSet operation: Requires capabilities : [CAPABILITY_NAMED_IAM]</code></pre>
+            <strong>Why it happened:</strong> The original command used <span class="inline-code">--capabilities CAPABILITY_IAM</span>. But the template has <span class="inline-code">RoleName: !Sub "${AWS::StackName}-lambda-role"</span> — an IAM role with an explicit custom name. AWS requires the stricter CAPABILITY_NAMED_IAM for any template that names IAM resources explicitly.
+            <br><br>
+            <strong>Fix:</strong> Replace <span class="inline-code">CAPABILITY_IAM</span> with <span class="inline-code">CAPABILITY_NAMED_IAM</span> (already corrected in the command above).
+            <br><br>
+            <strong>Rule to remember:</strong> CAPABILITY_IAM = unnamed/auto-named IAM resources OK. CAPABILITY_NAMED_IAM = explicitly-named IAM resources OK (superset — covers both cases). When in doubt, always use CAPABILITY_NAMED_IAM. It will never fail where CAPABILITY_IAM would succeed.
+          </div>
+        </div>
+
+        <div class="why-here">
+          <h5>Why is this Step 1 of the entire deployment?</h5>
+          <p>Because every other step in this guide depends on what this command creates. Lambda create-function needs the IAM role ARN (created here). API Gateway route creation needs the API ID (created here). S3 sync needs the bucket name (created here). Lambda needs a DynamoDB table to write to (created here). This is the foundation — skip or fail this and nothing else in the guide is possible.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">Get and save the stack outputs</div></div>
+      <div class="step-body">
+        <pre><code>aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query 'Stacks[0].Outputs[*].[OutputKey,OutputValue]' \
+  --output table</code></pre>
+
+        <table class="cmd-table">
+          <thead><tr><th>Flag / Argument</th><th>What it does and why</th></tr></thead>
+          <tbody>
+            <tr><td>describe-stacks</td><td>Fetches the current state of a named CloudFormation stack — its status, parameters, and importantly its Outputs. Outputs are values the template explicitly exports (API URL, bucket name, etc.) that you need to use in subsequent steps. Without this command you would have to hunt through the AWS console to find each value.</td></tr>
+            <tr><td>--stack-name url-shortener-infra</td><td>Must exactly match the name used in the deploy command. This identifies which stack's data to return.</td></tr>
+            <tr><td>--query 'Stacks[0].Outputs[*].[OutputKey,OutputValue]'</td><td>JMESPath query that filters the large JSON response. Stacks[0] = first result (only one stack with this name). Outputs[*] = all outputs. .[OutputKey,OutputValue] = return only the name and value columns, dropping extra metadata. Without this, the full response is hard to read.</td></tr>
+            <tr><td>--output table</td><td>Formats the filtered result as a human-readable ASCII table. Much easier to scan than raw JSON, especially when you are looking for specific values to copy into other commands.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="explain">
+          <h5>What outputs you will see and why you need each one</h5>
+          <p><strong>ApiGatewayUrl</strong> — e.g. https://abc123.execute-api.us-east-1.amazonaws.com/dev. This goes into app.js and admin.js in Phase 3. Without it the frontend will not talk to your backend.</p>
+          <p><strong>ApiGatewayId</strong> — e.g. abc123. Needed in Phase 2 to create integrations and routes, and to grant Lambda permissions.</p>
+          <p><strong>DynamoDBTableName</strong> — the actual table name (url-shortener-infra-links). Your Lambda functions have this hardcoded — verify they match exactly.</p>
+          <p><strong>LambdaRoleArn</strong> — the full ARN of the IAM role. You supply this when creating each Lambda function.</p>
+          <p><strong>S3BucketName</strong> — the actual bucket name with account ID suffix. Needed in Phase 3 for the sync command.</p>
+          <p><strong>S3WebsiteUrl</strong> — the public HTTP URL of your frontend. This is what you open in the browser.</p>
+        </div>
+
+        <div class="why-here">
+          <h5>Why collect outputs immediately after Phase 1?</h5>
+          <p>Every step in Phase 2 and Phase 3 requires values that only exist after Phase 1. Collecting them now in one command means you have everything at hand before starting Phase 2 — no stopping mid-deployment to look things up. In a timed interview, this saves valuable minutes.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">Verify each resource was created</div></div>
+      <div class="step-body">
+        <pre><code># Verify DynamoDB table
+aws dynamodb list-tables --region us-east-1
+
+# Verify S3 bucket
+aws s3 ls | grep url-shortener
+
+# Verify API Gateway
+aws apigatewayv2 get-apis --region us-east-1</code></pre>
+
+        <div class="explain">
+          <h5>Why verify manually instead of trusting CloudFormation said "CREATE_COMPLETE"?</h5>
+          <p>CloudFormation reports completion for the stack as a whole, but occasionally resources have subtle issues — wrong billing mode, wrong region, missing policy. Verifying takes 30 seconds and catches issues before you build on top of them. If you skip this and something is wrong, you will get confusing errors deep in Phase 2 and waste time debugging the wrong layer.</p>
+          <p><strong>aws dynamodb list-tables</strong> — confirms the exact table name. Lambda hardcodes <span class="inline-code">url-shortener-infra-links</span>. If CloudFormation named it differently (e.g. because of a stack name mismatch), every Lambda DynamoDB call fails with ResourceNotFoundException.</p>
+          <p><strong>aws apigatewayv2 get-apis</strong> — note the v2 here. This project uses API Gateway HTTP API (v2), not REST API (v1). They are different services with different CLI commands. If you run <span class="inline-code">aws apigateway get-rest-apis</span> (v1) you will see nothing — use apigatewayv2.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section" id="phase2">
+  <div class="section-header"><div class="section-num">4</div><div class="section-title">Phase 2 — Backend: Deploy 3 Lambda Functions</div></div>
+  <div class="section-body">
+
+    <div class="sequence-note">
+      <strong>Why Phase 2 runs second:</strong> Lambda functions need the IAM role from Phase 1 to be created with. They need to be attached to the API Gateway from Phase 1 via integrations and routes. You also need the DynamoDB table name from Phase 1 to pass as an environment variable. None of this is possible before Phase 1. Phase 2 runs before Phase 3 because the frontend needs a working API URL — which only makes sense once Lambda functions are wired up.
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">⚡</div>
+      <div class="callout-body"><strong>What deploying a Lambda function means:</strong> Lambda does not run on a server that is always on. You upload a ZIP file containing your Python code to AWS. AWS stores it. When an API Gateway request arrives, AWS spins up a micro-container, runs your handler function, returns the response, then shuts down. The ZIP is your deployment package. No provisioning, no SSH, no server management.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">Create the deployment ZIP packages</div></div>
+      <div class="step-body">
+        <pre><code>mkdir -p build
+
+cd src/backend/functions && zip ../../../build/create_link.zip create_link.py && cd ../../..
+cd src/backend/functions && zip ../../../build/redirect_link.zip redirect_link.py && cd ../../..
+cd src/backend/functions && zip ../../../build/admin_links.zip admin_links.py && cd ../../..</code></pre>
+
+        <table class="cmd-table">
+          <thead><tr><th>Part</th><th>What it does and why</th></tr></thead>
+          <tbody>
+            <tr><td>mkdir -p build</td><td>Creates a /build directory at the project root for the ZIP files. The -p flag means "create parent directories if needed, and do not error if already exists." Done first because the zip command will fail if the destination directory does not exist.</td></tr>
+            <tr><td>cd src/backend/functions</td><td>Navigates into the folder containing the .py files before zipping. This is critical: when zip runs, the file is added to the archive relative to the current directory. If you zip from elsewhere, the file ends up inside a subfolder in the ZIP, and Lambda will fail to find the handler file at runtime because it looks for it at the root of the ZIP.</td></tr>
+            <tr><td>zip ../../../build/create_link.zip create_link.py</td><td>Creates the ZIP archive. ../../../build/ navigates three levels up (functions → backend → src → project root) then into build/. The result is a ZIP where create_link.py sits at the root — exactly how Lambda requires it.</td></tr>
+            <tr><td>cd ../../..</td><td>Navigates back to the project root after each zip so the next cd command starts from the correct location. Forget this and the paths cascade incorrectly.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="explain">
+          <h5>Why ZIP? Why not just point Lambda at the .py file directly?</h5>
+          <p>Lambda does not have access to your local filesystem or GitHub. The only way to get code into Lambda is to package it as a ZIP and upload it. AWS stores the ZIP, extracts it into a temporary execution environment, and calls your handler when a request arrives. If your function needed external packages like <span class="inline-code">requests</span>, you would also run <span class="inline-code">pip install requests -t .</span> inside the functions folder to bundle them into the ZIP. This project only uses boto3 which is pre-installed in all Lambda Python runtimes — so the .py file alone is sufficient.</p>
+        </div>
+
+        <div class="why-here">
+          <h5>Why create all three ZIPs before creating any Lambda function?</h5>
+          <p>The <span class="inline-code">aws lambda create-function</span> command requires you to supply the ZIP at creation time. Creating all ZIPs first means you can run all three create-function commands back-to-back without switching tasks. It also makes it easy to spot if a ZIP is missing before wasting time on the create-function calls.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">Get the Lambda IAM Role ARN</div></div>
+      <div class="step-body">
+        <pre><code>ROLE_ARN=$(aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query "Stacks[0].Outputs[?OutputKey=='LambdaRoleArn'].OutputValue" \
+  --output text)
+
+echo "Role ARN: $ROLE_ARN"
+# Should print: arn:aws:iam::264449293739:role/url-shortener-infra-lambda-role</code></pre>
+
+        <div class="explain">
+          <h5>What is an IAM Role and why does Lambda need one?</h5>
+          <p>An IAM Role is a set of permissions that an AWS service can assume. Your Lambda function needs two things: (1) permission to write logs to CloudWatch so you can debug it, and (2) permission to read and write records in DynamoDB. Without a role granting these, Lambda gets AccessDeniedException on every DynamoDB call. The role was created in Phase 1 with exactly these policies. You are fetching its ARN (Amazon Resource Name — a globally unique identifier for any AWS resource) to assign it to your functions.</p>
+        </div>
+        <div class="explain">
+          <h5>Command breakdown — the shell substitution and query syntax</h5>
+          <p><span class="inline-code">$(...)</span> = shell command substitution. Runs the inner command and stores its printed output in the ROLE_ARN variable. Every subsequent reference to $ROLE_ARN uses this stored value.</p>
+          <p><span class="inline-code">Stacks[0].Outputs[?OutputKey=='LambdaRoleArn'].OutputValue</span> = JMESPath filter. From the Outputs array, find the item where OutputKey equals 'LambdaRoleArn', then return only its OutputValue. <span class="inline-code">--output text</span> returns it as plain text without JSON quotes so it stores cleanly in a shell variable.</p>
+        </div>
+        <div class="why-here">
+          <h5>Why fetch this dynamically instead of hardcoding the ARN?</h5>
+          <p>The ARN contains your AWS account ID (12-digit number) and the stack name — both of which differ per person and per environment. Fetching it dynamically means this guide works for any AWS account without edits. Hardcoding would break for anyone using a different account or stack name.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">Create all 3 Lambda functions</div></div>
+      <div class="step-body">
+        <pre><code># 1. Create Link Function
+aws lambda create-function \
+  --function-name url-shortener-infra-createLink \
+  --runtime python3.9 \
+  --role $ROLE_ARN \
+  --handler create_link.lambda_handler \
+  --zip-file fileb://build/create_link.zip \
+  --region us-east-1 \
+  --environment Variables={TABLE_NAME=url-shortener-infra-links}
+
+# 2. Redirect Link Function
+aws lambda create-function \
+  --function-name url-shortener-infra-redirectLink \
+  --runtime python3.9 \
+  --role $ROLE_ARN \
+  --handler redirect_link.lambda_handler \
+  --zip-file fileb://build/redirect_link.zip \
+  --region us-east-1 \
+  --environment Variables={TABLE_NAME=url-shortener-infra-links}
+
+# 3. Admin Links Function
+aws lambda create-function \
+  --function-name url-shortener-infra-adminLinks \
+  --runtime python3.9 \
+  --role $ROLE_ARN \
+  --handler admin_links.lambda_handler \
+  --zip-file fileb://build/admin_links.zip \
+  --region us-east-1 \
+  --environment Variables={TABLE_NAME=url-shortener-infra-links}</code></pre>
+
+        <table class="cmd-table">
+          <thead><tr><th>Flag</th><th>What it does and why set this way</th></tr></thead>
+          <tbody>
+            <tr><td>--function-name</td><td>The name of the Lambda function in AWS. Must be unique within a region. Prefixed with the stack name (url-shortener-infra-) to group related functions and avoid collisions with other projects in the same account. The deploy-backend.py script searches for functions matching this prefix pattern.</td></tr>
+            <tr><td>--runtime python3.9</td><td>Tells Lambda which language environment to execute your code in. Must match what your code was written for. Python 3.9 is the version specified in package.json and is stable with good boto3 support. Lambda has boto3 pre-installed for all Python runtimes so you do not need to bundle it in the ZIP.</td></tr>
+            <tr><td>--role $ROLE_ARN</td><td>Assigns the IAM role fetched in Step 2. This is what gives the function permission to access DynamoDB and write to CloudWatch Logs. Without this, every DynamoDB call returns AccessDeniedException and you would see nothing in CloudWatch either.</td></tr>
+            <tr><td>--handler create_link.lambda_handler</td><td>Tells Lambda exactly which function to call when triggered. Format: filename.function_name. create_link = the Python file (create_link.py, without the .py extension). lambda_handler = the function defined as def lambda_handler(event, context) inside that file. This is the standard Lambda entry point convention — all three files follow it.</td></tr>
+            <tr><td>--zip-file fileb://build/create_link.zip</td><td>The deployment package path. fileb:// prefix means "file, binary mode" — required for binary files like ZIPs (as opposed to text files which use file://). Relative to your current working directory — another reason you must run commands from the project root.</td></tr>
+            <tr><td>--environment Variables={TABLE_NAME=...}</td><td>Sets environment variables inside the Lambda execution environment. Your Python code reads the table name with os.environ.get('TABLE_NAME') rather than hardcoding it. This means you can deploy to a staging environment with a different table just by changing the env var — no code changes needed.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="explain">
+          <h5>For re-deployments — use update-function-code instead</h5>
+          <p>create-function fails if the function already exists (it is not idempotent — cannot be run twice safely). update-function-code replaces the code ZIP without touching configuration (role, timeout, env vars). Use this on every re-deploy after the first:</p>
+          <pre><code>aws lambda update-function-code \
+  --function-name url-shortener-infra-createLink \
+  --zip-file fileb://build/create_link.zip \
+  --region us-east-1
+# Repeat for redirectLink and adminLinks</code></pre>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">4</div><div class="step-title">Wire Lambda functions to API Gateway routes</div></div>
+      <div class="step-body">
+        <pre><code># Get API Gateway ID and build Lambda ARNs
+API_ID=$(aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query "Stacks[0].Outputs[?OutputKey=='ApiGatewayId'].OutputValue" \
+  --output text)
+
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+REGION=us-east-1
+CREATE_ARN="arn:aws:lambda:$REGION:$ACCOUNT_ID:function:url-shortener-infra-createLink"
+REDIRECT_ARN="arn:aws:lambda:$REGION:$ACCOUNT_ID:function:url-shortener-infra-redirectLink"
+ADMIN_ARN="arn:aws:lambda:$REGION:$ACCOUNT_ID:function:url-shortener-infra-adminLinks"
+
+# Create integrations (the connection objects between API GW and Lambda)
+CREATE_INTEG=$(aws apigatewayv2 create-integration \
+  --api-id $API_ID --integration-type AWS_PROXY \
+  --integration-uri $CREATE_ARN --payload-format-version 2.0 \
+  --query IntegrationId --output text)
+
+REDIRECT_INTEG=$(aws apigatewayv2 create-integration \
+  --api-id $API_ID --integration-type AWS_PROXY \
+  --integration-uri $REDIRECT_ARN --payload-format-version 2.0 \
+  --query IntegrationId --output text)
+
+ADMIN_INTEG=$(aws apigatewayv2 create-integration \
+  --api-id $API_ID --integration-type AWS_PROXY \
+  --integration-uri $ADMIN_ARN --payload-format-version 2.0 \
+  --query IntegrationId --output text)
+
+# Create the actual HTTP routes pointing to each integration
+aws apigatewayv2 create-route --api-id $API_ID \
+  --route-key "POST /links" --target integrations/$CREATE_INTEG
+
+aws apigatewayv2 create-route --api-id $API_ID \
+  --route-key "GET /{code}" --target integrations/$REDIRECT_INTEG
+
+aws apigatewayv2 create-route --api-id $API_ID \
+  --route-key "GET /admin/links" --target integrations/$ADMIN_INTEG</code></pre>
+
+        <div class="explain">
+          <h5>Why is wiring routes a separate step from creating Lambda functions?</h5>
+          <p>API Gateway and Lambda are two completely separate AWS services. Creating a Lambda function does NOT automatically make it reachable via HTTP. You need to explicitly tell API Gateway: "when you receive a POST /links request, forward it to this Lambda." That connection is called an integration. Think of it like this: Lambda = a phone. Creating Lambda = buying the phone. Creating an integration and route = assigning that phone a public number and advertising it.</p>
+        </div>
+
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>⚠️ Critical lesson learned in testing: Do NOT use this manual wiring approach with a CloudFormation-managed API Gateway</strong>
+            <p style="margin:0.5rem 0; font-size:0.92rem;">Manually creating integrations and routes on an API Gateway that was created by CloudFormation causes a fundamental conflict. The CloudFormation-managed stage tracks a "deployment snapshot" of routes at the time it was deployed. Routes added manually afterwards are NOT included in that snapshot — so the stage ignores them and continues serving the old deployment (which has no routes). The result is persistent 500 errors where Lambda is never invoked, even though the routes visually appear correct when you run get-routes.</p>
+            <strong>The correct approach for this project:</strong> Lambda functions, integrations, and routes must ALL be defined inside <span class="inline-code">infrastructure.yaml</span> so CloudFormation manages them together and deploys them atomically. Do not create any of these manually as a separate step. When everything is in the YAML, CloudFormation creates them with correct deployment tracking from the start.
+            <br><br>
+            <strong>If you already created resources manually and need to fix it:</strong>
+            <pre><code># 1. Delete manually created routes (integrations cannot be deleted while routes reference them)
+aws apigatewayv2 delete-route --api-id $API_ID --route-id &lt;route-id&gt; --region $REGION
+
+# 2. Delete manually created integrations
+aws apigatewayv2 delete-integration --api-id $API_ID --integration-id &lt;integ-id&gt; --region $REGION
+
+# 3. Delete manually created Lambda functions
+aws lambda delete-function --function-name url-shortener-infra-createLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-redirectLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-adminLinks --region us-east-1
+
+# 4. Add Lambda + integrations + routes to infrastructure.yaml, then redeploy:
+aws cloudformation deploy \
+  --template-file infrastructure/infrastructure.yaml \
+  --stack-name url-shortener-infra \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --region us-east-1 --parameter-overrides Environment=dev
+
+# 5. After stack deploys, upload real code (CloudFormation uses placeholder):
+aws lambda update-function-code --function-name url-shortener-infra-createLink \
+  --zip-file fileb://build/create_link.zip --region us-east-1
+aws lambda update-function-code --function-name url-shortener-infra-redirectLink \
+  --zip-file fileb://build/redirect_link.zip --region us-east-1
+aws lambda update-function-code --function-name url-shortener-infra-adminLinks \
+  --zip-file fileb://build/admin_links.zip --region us-east-1</code></pre>
+          </div>
+        </div>
+
+        <table class="cmd-table">
+          <thead><tr><th>Concept</th><th>Explanation</th></tr></thead>
+          <tbody>
+            <tr><td>create-integration</td><td>Creates a connection object between API Gateway and a Lambda. AWS_PROXY type means API Gateway passes the full HTTP request (headers, body, path params, method) directly to Lambda as a JSON event object, and Lambda returns the full HTTP response including status code and headers. Lambda handles everything — this is the standard pattern.</td></tr>
+            <tr><td>--payload-format-version 2.0</td><td>Specifies the format of the event object Lambda receives. Version 2.0 is simpler and newer. Your Lambda code uses the v2.0 structure (it checks event.get('requestContext', {}).get('http', {}).get('method')). Using 1.0 would break the CORS handling logic in all three functions because the event structure is different.</td></tr>
+            <tr><td>--route-key "GET /{code}"</td><td>The HTTP method + path pattern that triggers this route. Curly braces denote a path parameter — {code} captures whatever comes after the slash and passes it as pathParameters.code in the Lambda event. This is how redirect_link.py gets the short code from the URL.</td></tr>
+            <tr><td>--target integrations/$INTEG_ID</td><td>Links the route to the integration just created. The "integrations/" prefix is required — it is how API Gateway distinguishes integration targets from other target types. The integration ID was captured in the variable by storing the create-integration output.</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">5</div><div class="step-title">Grant API Gateway permission to invoke Lambda</div></div>
+      <div class="step-body">
+        <pre><code>aws lambda add-permission \
+  --function-name url-shortener-infra-createLink \
+  --statement-id apigw-create \
+  --action lambda:InvokeFunction \
+  --principal apigateway.amazonaws.com \
+  --source-arn "arn:aws:execute-api:$REGION:$ACCOUNT_ID:$API_ID/*/*"
+
+# Repeat for redirectLink with --statement-id apigw-redirect
+# Repeat for adminLinks with  --statement-id apigw-admin</code></pre>
+
+        <div class="explain">
+          <h5>Why is this a separate step? Did creating the integration not wire things up?</h5>
+          <p>This is a common point of confusion. Creating the integration (Step 4) tells API Gateway which Lambda to call. But Lambda has its own separate resource-based permission system — a policy attached to the function itself — that controls who is allowed to invoke it. By default, nothing is allowed to invoke Lambda, not even API Gateway. You must explicitly grant the permission here. This is AWS defense-in-depth security: two separate checks must both pass. API Gateway must be allowed to invoke Lambda (this step) AND Lambda must have an IAM role to call DynamoDB (Phase 1). Two separate permission layers.</p>
+        </div>
+
+        <table class="cmd-table">
+          <thead><tr><th>Flag</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>--statement-id apigw-create</td><td>A unique label for this permission entry in the Lambda resource policy. Must be unique per function. If you run this command twice with the same statement-id it fails with "already exists" — use a different ID or delete the existing permission first.</td></tr>
+            <tr><td>--action lambda:InvokeFunction</td><td>The specific IAM action being granted — the ability to execute the function. Minimum permission needed for API Gateway to trigger Lambda.</td></tr>
+            <tr><td>--principal apigateway.amazonaws.com</td><td>Who is being granted permission — the API Gateway service itself, identified by its service principal. This is not a user or role — it is AWS's own service identity.</td></tr>
+            <tr><td>--source-arn "arn:aws:execute-api:..."</td><td>Scopes the permission so ONLY your specific API Gateway (identified by $API_ID) can invoke this Lambda. The /* /* at the end means any stage, any method. Without this, any API Gateway in your entire account could invoke this function — a security risk.</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section" id="phase3">
+  <div class="section-header"><div class="section-num">5</div><div class="section-title">Phase 3 — Frontend: Deploy to S3</div></div>
+  <div class="section-body">
+
+    <div class="sequence-note">
+      <strong>Why Phase 3 runs last:</strong> The JavaScript files must contain your real API Gateway URL before being uploaded. That URL only exists after Phase 1 (API Gateway created) and is only meaningful after Phase 2 (Lambda functions wired up and responding to requests). Deploying frontend first would mean serving a broken app that points nowhere.
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">🌐</div>
+      <div class="callout-body"><strong>How S3 static hosting works:</strong> S3 is normally cloud file storage. In "static website" mode it acts as a web server — serving HTML/CSS/JS directly to browsers over HTTP. No Node.js process, no nginx, no server to manage. Files are stored as S3 objects and served at a public URL. Scales to millions of requests automatically. Extremely cheap — you pay for storage and data transfer only.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">Update the API URL in frontend JS files</div></div>
+      <div class="step-body">
+        <pre><code># First get your real API URL
+API_URL=$(aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query "Stacks[0].Outputs[?OutputKey=='ApiGatewayUrl'].OutputValue" \
+  --output text)
+echo "Your API URL: $API_URL"</code></pre>
+
+        <p style="margin:0.8rem 0; font-size:0.92rem;">Now open <span class="inline-code">src/frontend/assets/app.js</span> AND <span class="inline-code">src/frontend/assets/admin.js</span> and update the CONFIG at the top of each:</p>
+
+        <pre><code>const CONFIG = {
+    API_BASE_URL: 'https://&lt;YOUR_API_ID&gt;.execute-api.us-east-1.amazonaws.com/dev',
+    DEMO_MODE: false,    // ← must be false for production
+    AUTO_FALLBACK: true
+};</code></pre>
+
+        <div class="explain">
+          <h5>Why must you update this before uploading to S3?</h5>
+          <p>The frontend JavaScript runs entirely in the user's browser — it is not server-side code. When a user clicks "Shorten URL", their browser directly calls the API_BASE_URL via JavaScript fetch(). If this URL is wrong, the app detects the failure and silently falls back to DEMO_MODE — showing fake locally-generated data with no real backend interaction. Your links would not actually be stored anywhere.</p>
+          <p>You must update <strong>both app.js</strong> (used by index.html for the shortener) and <strong>admin.js</strong> (used by admin.html for the dashboard) — they each have their own CONFIG object at the top.</p>
+          <p>Setting <span class="inline-code">DEMO_MODE: false</span> forces the app to call the real API instead of generating mock data locally.</p>
+        </div>
+
+        <div class="why-here">
+          <h5>Why edit files locally before uploading rather than after?</h5>
+          <p>S3 serves static files — there is no way to inject runtime variables or run code on S3. The API URL must be baked into the JS file before it is uploaded. This is the standard pattern for static web apps. Modern frameworks like React and Vue use build-time environment variables (process.env.REACT_APP_API_URL) for exactly the same reason — the URL gets embedded into the built bundle before deployment.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">Get the S3 bucket name</div></div>
+      <div class="step-body">
+        <pre><code>BUCKET=$(aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query "Stacks[0].Outputs[?OutputKey=='S3BucketName'].OutputValue" \
+  --output text)
+echo "Bucket: $BUCKET"</code></pre>
+        <div class="explain">
+          <h5>Why not just type the bucket name directly?</h5>
+          <p>The bucket name includes your AWS account ID as a suffix (e.g. url-shortener-infra-frontend-264449293739). S3 bucket names must be globally unique across every AWS account in the world. CloudFormation appends your account ID using <span class="inline-code">${AWS::AccountId}</span> to guarantee uniqueness. Since the account ID differs per person, fetching the name dynamically is the safe approach.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">Sync frontend files to S3</div></div>
+      <div class="step-body">
+        <pre><code># Upload all files
+aws s3 sync src/frontend/ s3://$BUCKET/ \
+  --region us-east-1 --delete --exclude "*.md"
+
+# Fix content types (so browsers handle files correctly)
+aws s3 cp s3://$BUCKET/ s3://$BUCKET/ \
+  --recursive --exclude "*" --include "*.html" \
+  --content-type "text/html" --metadata-directive REPLACE --region us-east-1
+
+aws s3 cp s3://$BUCKET/ s3://$BUCKET/ \
+  --recursive --exclude "*" --include "*.js" \
+  --content-type "application/javascript" --metadata-directive REPLACE --region us-east-1
+
+aws s3 cp s3://$BUCKET/ s3://$BUCKET/ \
+  --recursive --exclude "*" --include "*.css" \
+  --content-type "text/css" --metadata-directive REPLACE --region us-east-1</code></pre>
+
+        <table class="cmd-table">
+          <thead><tr><th>Flag / Part</th><th>What it does and why</th></tr></thead>
+          <tbody>
+            <tr><td>aws s3 sync</td><td>Compares local files with what is in S3 and only uploads new or changed files (like rsync). Much faster than re-uploading everything on re-deploys. Without --delete, files removed locally stay in S3 forever.</td></tr>
+            <tr><td>src/frontend/</td><td>Local source directory containing index.html, admin.html, assets/app.js, assets/admin.js, assets/styles.css. Everything here gets mirrored to S3 at the same relative path.</td></tr>
+            <tr><td>--delete</td><td>Removes objects from S3 that no longer exist locally. Without this, old/renamed files accumulate. If you renamed index.html to app.html, the old index.html would stay in S3 serving stale content.</td></tr>
+            <tr><td>--exclude "*.md"</td><td>Skips markdown files like README.md. Developer documentation — no reason to serve them publicly from a website bucket.</td></tr>
+            <tr><td>Content-type correction commands</td><td>When aws s3 sync uploads files, it sometimes guesses MIME types incorrectly or defaults to application/octet-stream. Browsers use the Content-Type HTTP header to decide how to handle a file. If .js files have the wrong content type, modern browsers refuse to execute them as scripts (security policy). These cp commands overwrite the content-type metadata on already-uploaded files.</td></tr>
+            <tr><td>--metadata-directive REPLACE</td><td>When copying a file to the same location (same source and destination — used here only to update metadata), S3 normally refuses to overwrite metadata. REPLACE forces it to do so. Without this flag, the content-type corrections silently do nothing.</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">4</div><div class="step-title">Get your live URLs</div></div>
+      <div class="step-body">
+        <pre><code>aws cloudformation describe-stacks \
+  --stack-name url-shortener-infra \
+  --query "Stacks[0].Outputs[?OutputKey=='S3WebsiteUrl'].OutputValue" \
+  --output text
+
+# Main app:     http://&lt;bucket&gt;.s3-website-us-east-1.amazonaws.com
+# Admin panel:  http://&lt;bucket&gt;.s3-website-us-east-1.amazonaws.com/admin.html</code></pre>
+
+        <div class="explain">
+          <h5>Why HTTP not HTTPS?</h5>
+          <p>S3 static website hosting only supports HTTP. To get HTTPS you would add CloudFront (AWS CDN) in front of S3 and attach an SSL certificate from ACM (AWS Certificate Manager). That is on the project roadmap but not implemented in this version. For an interview demo, HTTP is fine. Worth mentioning as a "what I would add next" when asked.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-icon">🚀</div>
+          <div class="callout-body"><strong>One-command deploy after the first manual deployment:</strong>
+            <pre><code>chmod +x scripts/deploy/*.sh
+./scripts/deploy/deploy-all.sh production</code></pre>
+            Runs Phase 1 → 2 → 3 automatically and prints final URLs. Use for re-deploys once you have done the full manual walk-through at least once.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section" id="verify">
+  <div class="section-header"><div class="section-num">6</div><div class="section-title">Verification &amp; Testing — Confirm Every Layer Works</div></div>
+  <div class="section-body">
+
+    <div class="explain">
+      <h5>Why test each layer individually before checking the UI?</h5>
+      <p>If you open the browser and something looks broken, you will not know whether the problem is in frontend JS, API Gateway routing, Lambda code, or DynamoDB access. Testing from the bottom up (database → Lambda → API → UI) means when you find a failure you know exactly which layer to fix. In an interview, methodical debugging like this looks far better than random clicking.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">1</div><div class="step-title">Test Create Link endpoint</div></div>
+      <div class="step-body">
+        <pre><code>API_URL="https://&lt;your-api-id&gt;.execute-api.us-east-1.amazonaws.com/dev"
+
+curl -X POST $API_URL/links \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://google.com", "customCode": "testlink"}' \
+  | python3 -m json.tool</code></pre>
+        <div class="explain">
+          <h5>What to expect and what each part is testing</h5>
+          <p><strong>Expected:</strong> <span class="inline-code">{"success": true, "shortCode": "testlink", "shortUrl": "...", "targetUrl": "...", "createdAt": "..."}</span></p>
+          <p><span class="inline-code">curl -X POST</span> sends an HTTP POST. <span class="inline-code">-H "Content-Type: application/json"</span> tells API Gateway to parse the body as JSON. <span class="inline-code">-d '{...}'</span> is the request body. <span class="inline-code">| python3 -m json.tool</span> pretty-prints the JSON response.</p>
+          <p>{"message":"Not Found"} → POST /links route does not exist — Phase 2 Step 4 was not completed. 403 Forbidden → Lambda invoke permission not granted — Phase 2 Step 5 missing. 500 Internal Server Error → Lambda ran but threw an exception — check CloudWatch Logs for the traceback.</p>
+        </div>
+
+        <!-- ═══ ISSUE 1 ═══ -->
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue 1 Hit: {"message": "Internal Server Error"} — 500 with empty CloudWatch logs</strong>
+            <pre><code>{"message": "Internal Server Error"}
+
+# Checking logs showed nothing:
+aws logs describe-log-streams \
+  --log-group-name /aws/lambda/url-shortener-infra-createLink \
+  --region us-east-1 --order-by LastEventTime --descending --max-items 1
+# → logStreams: []   ← Lambda was never invoked at all</code></pre>
+            <strong>What empty logStreams means:</strong> If Lambda was invoked and crashed, you would see a log stream. An empty logStreams list means Lambda was never called — the 500 is coming from API Gateway itself, before it even reaches Lambda. The request is dying at the API Gateway layer.
+            <br><br>
+            <strong>Root cause discovered:</strong> The IntegrationUri ARNs were malformed — <span class="inline-code">:fu</span> got cut off when the ARN variable was constructed, resulting in broken ARNs like <span class="inline-code">arn:aws:lambda:us-east-1:690081480550nction:url-shortener-infra-createLink</span> instead of the correct <span class="inline-code">arn:aws:lambda:us-east-1:690081480550:function:url-shortener-infra-createLink</span>. API Gateway tried to call a non-existent Lambda ARN and returned 500.
+            <br><br>
+            <strong>How to diagnose a 500 systematically:</strong>
+            <pre><code># Step 1: Check if Lambda is even being invoked
+aws logs describe-log-streams \
+  --log-group-name /aws/lambda/url-shortener-infra-createLink \
+  --region us-east-1 --order-by LastEventTime --descending --max-items 1
+
+# Step 2: If logStreams is empty, bypass API Gateway and invoke Lambda directly
+aws lambda invoke \
+  --function-name url-shortener-infra-createLink \
+  --region us-east-1 \
+  --payload '{"body": "{\"url\": \"https://google.com\"}", "requestContext": {"http": {"method": "POST"}}}' \
+  --cli-binary-format raw-in-base64-out \
+  response.json && cat response.json
+# If this returns 201: Lambda code is fine, problem is API Gateway config
+# If this fails: Lambda code has a bug
+
+# Step 3: Verify integration URIs are correct
+aws apigatewayv2 get-integrations --api-id $API_ID --region us-east-1
+# Check that IntegrationUri contains :function: not a garbled string</code></pre>
+          </div>
+        </div>
+
+        <!-- ═══ ISSUE 2 ═══ -->
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue 2 Hit: Malformed Lambda ARN in IntegrationUri — :function: missing</strong>
+            <pre><code># Broken (what was found):
+"IntegrationUri": "arn:aws:lambda:us-east-1:690081480550nction:url-shortener-infra-createLink"
+
+# Correct (what it should be):
+"IntegrationUri": "arn:aws:lambda:us-east-1:690081480550:function:url-shortener-infra-createLink"</code></pre>
+            <strong>Why it happened:</strong> When constructing the ARN string manually in the terminal, if the variable <span class="inline-code">$ACCOUNT_ID</span> is not set or has a trailing character issue, the shell concatenates it directly into <span class="inline-code">:function:</span> and the <span class="inline-code">:f</span> prefix gets absorbed. The ARN looks almost right but is invalid — API Gateway silently returns 500 rather than a clear "bad ARN" error.
+            <br><br>
+            <strong>Fix — delete routes first (routes block integration deletion), then delete integrations, then recreate with correct ARNs:</strong>
+            <pre><code># You cannot delete integrations while routes reference them
+# Must delete routes first:
+aws apigatewayv2 delete-route --api-id $API_ID --route-id &lt;route-id&gt; --region $REGION
+# Repeat for all 3 routes
+
+# Then delete the broken integrations:
+aws apigatewayv2 delete-integration --api-id $API_ID --integration-id &lt;integ-id&gt; --region $REGION
+# Repeat for all 3 integrations
+
+# Then build ARNs correctly — verify $ACCOUNT_ID is set first:
+echo $ACCOUNT_ID  # Must print a 12-digit number, e.g. 690081480550
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)  # Re-set if empty
+
+CREATE_ARN="arn:aws:lambda:$REGION:$ACCOUNT_ID:function:url-shortener-infra-createLink"
+echo $CREATE_ARN  # Verify it looks correct before using it</code></pre>
+            <strong>Prevention:</strong> Always <span class="inline-code">echo $CREATE_ARN</span> before running create-integration to visually verify the ARN is correctly formed. The pattern must be: <span class="inline-code">arn:aws:lambda:REGION:12DIGITACCOUNTID:function:FUNCTIONNAME</span>
+          </div>
+        </div>
+
+        <!-- ═══ ISSUE 3 ═══ -->
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue 3 Hit: Manually created routes not picked up by CloudFormation-managed API Gateway stage</strong>
+            <p style="margin:0.5rem 0; font-size:0.92rem;">After fixing the ARNs and recreating integrations/routes manually, API Gateway still returned 500 and CloudWatch logs remained empty. The routes were correctly wired and the Lambda permissions were correct — but the stage was not serving the manually added routes.</p>
+            <strong>Root cause:</strong> When a CloudFormation-managed API Gateway stage has AutoDeploy enabled, it creates a "deployment" that is a snapshot of the API's routes at the time CloudFormation deployed it. Routes added manually afterwards are not automatically included in that deployment snapshot. The stage was still serving the old deployment (which had no routes at all) rather than the current state of the API.
+            <br><br>
+            <strong>Why this is a fundamental design conflict:</strong> CloudFormation owns this API stage. Manually adding routes alongside CloudFormation-managed resources creates a state mismatch. CloudFormation thinks the API has no routes; reality has routes; the stage deployment reflects CloudFormation's view.
+            <br><br>
+            <strong>The correct fix — move Lambda functions, integrations, and routes INTO infrastructure.yaml so CloudFormation owns everything:</strong>
+            <pre><code># This is the key architectural lesson:
+# Resources created manually OUTSIDE CloudFormation are invisible to CloudFormation's
+# deployment tracking. Add Lambda functions, integrations, and routes to the YAML template
+# so everything is managed together and deployed atomically.
+
+# After updating infrastructure.yaml, delete the manually created Lambda functions
+# (CloudFormation cannot adopt externally created resources with same names):
+aws lambda delete-function --function-name url-shortener-infra-createLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-redirectLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-adminLinks --region us-east-1
+
+# Delete manually created routes and integrations too (they conflict):
+aws apigatewayv2 delete-route --api-id $API_ID --route-id &lt;id&gt; --region $REGION
+aws apigatewayv2 delete-integration --api-id $API_ID --integration-id &lt;id&gt; --region $REGION
+
+# Then redeploy CloudFormation — it creates everything cleanly:
+aws cloudformation deploy \
+  --template-file infrastructure/infrastructure.yaml \
+  --stack-name url-shortener-infra \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --region us-east-1 \
+  --parameter-overrides Environment=dev \
+  --no-fail-on-empty-changeset
+
+# After stack deploys, upload your actual code (CloudFormation uses placeholder code):
+cd src/backend/functions
+zip ../../../build/create_link.zip create_link.py
+zip ../../../build/redirect_link.zip redirect_link.py
+zip ../../../build/admin_links.zip admin_links.py
+cd ../../..
+
+aws lambda update-function-code --function-name url-shortener-infra-createLink \
+  --zip-file fileb://build/create_link.zip --region us-east-1
+aws lambda update-function-code --function-name url-shortener-infra-redirectLink \
+  --zip-file fileb://build/redirect_link.zip --region us-east-1
+aws lambda update-function-code --function-name url-shortener-infra-adminLinks \
+  --zip-file fileb://build/admin_links.zip --region us-east-1</code></pre>
+            <strong>Key rule to remember:</strong> Never mix manually created AWS resources with CloudFormation-managed resources in the same stack. Either manage everything through CloudFormation, or manage everything manually. Mixing them causes deployment tracking conflicts exactly like this.
+          </div>
+        </div>
+
+        <!-- ═══ ISSUE 4 ═══ -->
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue 4 Hit: CloudFormation EarlyValidation failure — ResourceExistenceCheck</strong>
+            <pre><code>Failed to create the changeset: Waiter ChangeSetCreateComplete failed:
+Status: FAILED. Reason: The following hook(s)/validation failed:
+[AWS::EarlyValidation::ResourceExistenceCheck]</code></pre>
+            <strong>Why it happened:</strong> After updating infrastructure.yaml to include Lambda function definitions, CloudFormation tried to create the 3 Lambda functions by name. But those same function names already existed as manually created resources outside the stack. CloudFormation's EarlyValidation check (introduced in 2024) detects this before even starting deployment and refuses to proceed — it will not overwrite existing resources that it does not own.
+            <br><br>
+            <strong>Fix:</strong> Delete the manually created Lambda functions first, then redeploy:
+            <pre><code>aws lambda delete-function --function-name url-shortener-infra-createLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-redirectLink --region us-east-1
+aws lambda delete-function --function-name url-shortener-infra-adminLinks --region us-east-1
+
+# Then also delete manually created routes and integrations
+# (they will conflict when CloudFormation tries to create identical ones):
+aws apigatewayv2 get-routes --api-id $API_ID --region us-east-1  # get IDs
+aws apigatewayv2 delete-route --api-id $API_ID --route-id &lt;id&gt; --region $REGION
+aws apigatewayv2 get-integrations --api-id $API_ID --region us-east-1  # get IDs
+aws apigatewayv2 delete-integration --api-id $API_ID --integration-id &lt;id&gt; --region $REGION
+
+# Now redeploy cleanly:
+aws cloudformation deploy \
+  --template-file infrastructure/infrastructure.yaml \
+  --stack-name url-shortener-infra \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --region us-east-1 \
+  --parameter-overrides Environment=dev \
+  --no-fail-on-empty-changeset</code></pre>
+          </div>
+        </div>
+
+        <!-- ═══ ISSUE 5 ═══ -->
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue 5 Hit: Hardcoded old API ID inside create_link.py shortUrl</strong>
+            <pre><code># Response showed wrong API ID in shortUrl:
+{"shortUrl": "https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev/testlink4"}
+# But the actual working API is: bkewzxu3tc
+
+# The bug in create_link.py — hardcoded old API ID:
+'shortUrl': f"https://ijlmwfo9gd.execute-api.us-east-1.amazonaws.com/dev/{short_code}"</code></pre>
+            <strong>Why it happened:</strong> create_link.py had the API Gateway base URL hardcoded as a string literal. When the project was originally deployed it used a different API ID (ijlmwfo9gd). On re-deployment a new API Gateway was created with a new ID (bkewzxu3tc), but the old hardcoded URL in the code was not updated.
+            <br><br>
+            <strong>Note:</strong> This only affects the cosmetic shortUrl field returned in the response — the redirect still works correctly because the actual code is stored in DynamoDB and the redirect Lambda looks up by code, not by URL. But it means the "copy link" button in the frontend gives users a broken URL.
+            <br><br>
+            <strong>Fix — use an environment variable instead of hardcoding:</strong>
+            <pre><code># In create_link.py, replace the hardcoded shortUrl line with:
+base_url = os.environ.get('BASE_URL', f"https://{event.get('requestContext',{}).get('domainName','')}")
+'shortUrl': f"{base_url}/{short_code}"
+
+# Or simply use the request's own domain from the event (most robust):
+domain = event.get('requestContext', {}).get('domainName', '')
+stage = event.get('requestContext', {}).get('stage', 'dev')
+'shortUrl': f"https://{domain}/{stage}/{short_code}"</code></pre>
+            <strong>Prevention:</strong> Never hardcode API Gateway URLs or IDs in Lambda code. Use either environment variables (set via CloudFormation) or extract the domain dynamically from the Lambda event's requestContext.
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body"><strong>After all 5 issues were resolved, the successful test response was:</strong>
+            <pre><code>curl -X POST $API_URL/links \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://google.com", "customCode": "testlink4"}' \
+  | python3 -m json.tool
+
+# ✅ Response:
+{
+    "success": true,
+    "shortCode": "testlink4",
+    "shortUrl": "https://bkewzxu3tc.execute-api.us-east-1.amazonaws.com/dev/testlink4",
+    "targetUrl": "https://google.com",
+    "createdAt": "2026-03-23T11:07:04.821529Z"
+}</code></pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">2</div><div class="step-title">Test Redirect endpoint</div></div>
+      <div class="step-body">
+        <pre><code># Use curl -v (verbose), NOT curl -I (HEAD) — see issue below
+curl -v $API_URL/testlink4 2>&1 | tail -20</code></pre>
+        <div class="explain">
+          <h5>What to look for in verbose output</h5>
+          <p>You are checking: (1) <span class="inline-code">HTTP/2 301</span> status confirming redirect_link.py found the record. (2) <span class="inline-code">location: https://google.com</span> header confirming DynamoDB lookup returned the correct target. (3) <span class="inline-code">cache-control: no-cache</span> confirming the response headers are set correctly.</p>
+        </div>
+
+        <div class="callout danger">
+          <div class="callout-icon">🔴</div>
+          <div class="callout-body">
+            <strong>Issue Hit: curl -I gives 404 even when redirect is working</strong>
+            <pre><code># This gave a misleading 404:
+curl -I $API_URL/testlink4
+# HTTP/2 404
+
+# This correctly showed 301:
+curl -v $API_URL/testlink4 2>&1 | tail -20
+# HTTP/2 301
+# location: https://google.com</code></pre>
+            <strong>Why it happened:</strong> <span class="inline-code">curl -I</span> sends an HTTP HEAD request (not GET). The API Gateway route is defined as <span class="inline-code">GET /{code}</span> — it only matches GET requests. A HEAD request does not match GET, so API Gateway returns 404 "no matching route."
+            <br><br>
+            <strong>Rule to remember:</strong> Always use <span class="inline-code">curl -v</span> (verbose GET) to test redirect endpoints. <span class="inline-code">curl -I</span> (HEAD) is misleading for routes defined as GET-only. The -v flag shows both headers and body so you get the full picture without the method mismatch problem.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">3</div><div class="step-title">Test Admin endpoint</div></div>
+      <div class="step-body">
+        <pre><code>curl $API_URL/admin/links | python3 -m json.tool</code></pre>
+        <div class="explain">
+          <h5>What this confirms</h5>
+          <p>Confirms admin_links.py can scan DynamoDB and compute statistics. Check that "links" contains your testlink record, that click_count incremented after the redirect test, and that statistics.totalLinks and statistics.totalClicks are correct. This exact data is what the admin dashboard will display.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">4</div><div class="step-title">Verify DynamoDB record directly</div></div>
+      <div class="step-body">
+        <pre><code>aws dynamodb scan \
+  --table-name url-shortener-infra-links \
+  --region us-east-1</code></pre>
+        <div class="explain">
+          <h5>Why bypass Lambda and check DynamoDB directly?</h5>
+          <p>This completely bypasses Lambda and API Gateway and talks directly to the database. It proves data was actually persisted. It shows the raw DynamoDB types (S = String, N = Number, BOOL = Boolean). Useful when you are unsure if a problem is in the API layer or the data layer — this isolates the database independently of everything else.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><div class="step-num">5</div><div class="step-title">Open the frontend in a browser</div></div>
+      <div class="step-body">
+        <p style="font-size:0.93rem; margin-bottom:0.8rem;">Main app: <span class="inline-code">http://&lt;bucket&gt;.s3-website-us-east-1.amazonaws.com</span></p>
+        <p style="font-size:0.93rem;">Admin: <span class="inline-code">http://&lt;bucket&gt;.s3-website-us-east-1.amazonaws.com/admin.html</span></p>
+        <div class="explain">
+          <h5>What to verify in the browser</h5>
+          <p>Main page: paste a URL and click Shorten. You should get a real short link back with no "Demo Mode" notification. Click the short link — it should redirect to your URL. Open admin.html — it should show real data with your test links and click counts. If you see "Demo Mode" or fake data, the API_BASE_URL in app.js is wrong or the API is not responding — re-run curl tests 1–3 to isolate the layer that is failing.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section" id="schema">
+  <div class="section-header"><div class="section-num">7</div><div class="section-title">DynamoDB Schema Reference</div></div>
+  <div class="section-body">
+    <table class="data-table">
+      <thead><tr><th>Attribute</th><th>Type</th><th>Role</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>code</strong></td><td>String</td><td>Primary Key (Hash Key) — all lookups go through this</td><td>abc123</td></tr>
+        <tr><td><strong>target_url</strong></td><td>String</td><td>The original long URL to redirect to</td><td>https://google.com</td></tr>
+        <tr><td><strong>created_at</strong></td><td>String</td><td>ISO 8601 timestamp of creation</td><td>2025-12-19T10:30:00Z</td></tr>
+        <tr><td><strong>click_count</strong></td><td>Number</td><td>Total redirects — atomically incremented on every redirect</td><td>42</td></tr>
+        <tr><td><strong>custom_code</strong></td><td>Boolean</td><td>True if user chose the code, false if auto-generated</td><td>false</td></tr>
+      </tbody>
+    </table>
+    <div class="explain">
+      <h5>Key design decisions to explain in an interview</h5>
+      <p><strong>Why DynamoDB not PostgreSQL?</strong> URL shorteners have one access pattern: look up by short code. DynamoDB primary key lookup is O(1) with single-digit millisecond latency — perfect for redirect performance. SQL is overkill, no joins needed, no complex queries needed.</p>
+      <p><strong>Why on-demand billing?</strong> URL shorteners have highly variable traffic. On-demand means pay per request with automatic scaling. Provisioned mode requires predicting traffic upfront and over-provisioning.</p>
+      <p><strong>Why ADD not SET for click_count?</strong> DynamoDB's atomic ADD is thread-safe. Two simultaneous redirects both calling ADD :1 will both succeed and count correctly. Two simultaneous redirects using SET (read-then-write) would both read "5", both write "6", and you would lose a count.</p>
+      <p><strong>Why String for created_at not a date type?</strong> DynamoDB has no native datetime type. ISO 8601 strings sort lexicographically in the same order as chronologically — so date-range queries still work correctly even as plain strings.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section" id="api">
+  <div class="section-header"><div class="section-num">8</div><div class="section-title">API Endpoints Reference</div></div>
+  <div class="section-body">
+    <table class="data-table">
+      <thead><tr><th>Method</th><th>Path</th><th>Lambda</th><th>Success</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>POST</strong></td><td>/links</td><td>create_link.py</td><td>201</td><td>Shorten a URL with optional custom code</td></tr>
+        <tr><td><strong>GET</strong></td><td>/{code}</td><td>redirect_link.py</td><td>301</td><td>Redirect to target URL and increment click count</td></tr>
+        <tr><td><strong>GET</strong></td><td>/admin/links</td><td>admin_links.py</td><td>200</td><td>Return all links and statistics for the dashboard</td></tr>
+      </tbody>
+    </table>
+    <hr>
+    <div class="step">
+      <div class="step-header"><div class="step-num" style="width:auto;padding:0 0.5rem;border-radius:4px;">📄</div><div class="step-title">create_link.py — What it does step by step</div></div>
+      <div class="step-body">
+        <pre><code># 1. Parse JSON body from event['body']
+# 2. Validate URL with urlparse — must have http or https scheme and a netloc (domain)
+# 3. Check URL length is at most 2048 characters
+# 4. If customCode: validate with regex ^[a-zA-Z0-9]{3,50}$ (3-50 alphanumeric chars)
+# 5. If no customCode: generate random 6-char Base62 string (a-z A-Z 0-9 = 62^6 options)
+#    Check for collision in DynamoDB, retry up to 5 times if collision
+# 6. DynamoDB put_item with ConditionExpression='attribute_not_exists(code)'
+#    If condition fails because code exists: return 409 Conflict
+# 7. Return 201 with shortCode, shortUrl, targetUrl, createdAt</code></pre>
+        <div class="explain">
+          <h5>Key points to remember</h5>
+          <p><strong>ConditionExpression='attribute_not_exists(code)'</strong> makes the write atomic. It says "only write this item if no item with this code already exists." Without this, two near-simultaneous requests generating the same random code could both succeed and one would silently overwrite the other. The condition check and write happen atomically in DynamoDB.</p>
+          <p><strong>Base62 with 6 characters:</strong> 62^6 = about 56 billion possible codes. The probability of a collision on any single generation is 1 in 56 billion. The retry loop handles this astronomically rare case anyway.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-header"><div class="step-num" style="width:auto;padding:0 0.5rem;border-radius:4px;">📄</div><div class="step-title">redirect_link.py — What it does step by step</div></div>
+      <div class="step-body">
+        <pre><code># 1. Extract short code from event['pathParameters']['code']
+# 2. DynamoDB get_item(Key={'code': short_code})
+# 3. If not found: return 404 HTML error page with user-friendly message
+# 4. table.update_item: ADD click_count :1 (atomic thread-safe increment)
+#    Fire-and-forget: the 301 redirect is returned whether or not this update succeeds
+# 5. Return 301 with Location: target_url and Cache-Control: no-cache</code></pre>
+        <div class="explain">
+          <h5>Interesting nuance — 301 vs 302 and Cache-Control</h5>
+          <p>301 = Permanent Redirect (browsers cache it). 302 = Temporary Redirect (not cached). 301 would mean after the first visit, the browser redirects directly without hitting the server — faster but means if you change the target URL in DynamoDB, cached users still go to the old destination. Adding Cache-Control: no-cache with a 301 actually disables the caching, making it behave like a 302 in practice. Worth flagging in an interview as a nuance.</p>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-header"><div class="step-num" style="width:auto;padding:0 0.5rem;border-radius:4px;">📄</div><div class="step-title">admin_links.py — What it does step by step</div></div>
+      <div class="step-body">
+        <pre><code># 1. Read query params: limit (default 50), lastKey (pagination cursor)
+# 2. DynamoDB table.scan() — reads ALL items (no key filter)
+#    Uses Limit and ExclusiveStartKey for pagination
+# 3. convert_decimals(): DynamoDB returns numbers as Python Decimal type
+#    json.dumps() cannot serialize Decimal — must convert to int or float first
+# 4. Calculate statistics from the result set:
+#    totalClicks = sum of all click_counts
+#    averageClicks = totalClicks / len(links)
+#    todayLinks = count of links where created_at starts with today's ISO date
+# 5. Return links array + pagination + statistics</code></pre>
+        <div class="explain">
+          <h5>Why scan() and not query()?</h5>
+          <p>DynamoDB query() requires a partition key value — it fetches items with a known key. scan() reads the entire table regardless of key. For the admin dashboard where you want ALL links with no filter, scan() is correct. The trade-off is scan() reads every item and costs more for large tables. For a URL shortener at typical scale this is fine. At millions of records you would add a secondary index (GSI) to enable more efficient filtered queries.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section" id="troubleshoot">
+  <div class="section-header"><div class="section-num">9</div><div class="section-title">Troubleshooting Quick Fixes</div></div>
+  <div class="section-body">
+    <table class="data-table">
+      <thead><tr><th>Problem</th><th>Root Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>InsufficientCapabilitiesException</strong></td><td>Template has a named IAM resource but CAPABILITY_IAM was used</td><td>Use <span class="inline-code">--capabilities CAPABILITY_NAMED_IAM</span>. The template has an explicit RoleName.</td></tr>
+        <tr><td><strong>CloudFormation CREATE_FAILED</strong></td><td>IAM permissions, name collision, or template syntax error</td><td><span class="inline-code">aws cloudformation describe-stack-events --stack-name url-shortener-infra --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`]'</span></td></tr>
+        <tr><td><strong>{"message":"Not Found"} from API</strong></td><td>Route not created in API Gateway</td><td>Run Phase 2 Step 4 (create-integration + create-route). Verify: <span class="inline-code">aws apigatewayv2 get-routes --api-id $API_ID</span></td></tr>
+        <tr><td><strong>403 Forbidden from API</strong></td><td>Lambda invoke permission not granted to API Gateway</td><td>Re-run Phase 2 Step 5 (aws lambda add-permission) for all 3 functions</td></tr>
+        <tr><td><strong>500 from API</strong></td><td>Lambda code threw an exception</td><td>Check logs: <span class="inline-code">aws logs tail /aws/lambda/url-shortener-infra-createLink --follow</span></td></tr>
+        <tr><td><strong>CORS error in browser</strong></td><td>Missing CORS config or OPTIONS route</td><td>HttpApi in CloudFormation has CORS set to AllowOrigins: *. Check it deployed correctly in the stack resources.</td></tr>
+        <tr><td><strong>Frontend shows Demo Mode</strong></td><td>API_BASE_URL wrong or API not responding</td><td>Update CONFIG.API_BASE_URL in app.js AND admin.js. Re-sync to S3. Test API with curl first.</td></tr>
+        <tr><td><strong>DynamoDB ResourceNotFound</strong></td><td>Lambda looking for wrong table name</td><td>Table is <span class="inline-code">url-shortener-infra-links</span>. Verify with <span class="inline-code">aws dynamodb list-tables</span> and check TABLE_NAME env var on Lambda.</td></tr>
+        <tr><td><strong>S3 website returns 403</strong></td><td>Bucket policy not deployed or wrong</td><td>CloudFormation deploys FrontendBucketPolicy with public s3:GetObject. Check it is in the stack resources with CREATE_COMPLETE status.</td></tr>
+        <tr><td><strong>create-function fails already exists</strong></td><td>Function exists from previous deployment</td><td>Use <span class="inline-code">aws lambda update-function-code</span> instead of create-function.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip">
+      <div class="callout-icon">🔍</div>
+      <div class="callout-body"><strong>CloudWatch Logs — your best debugging tool for Lambda errors:</strong><pre><code>aws logs tail /aws/lambda/url-shortener-infra-createLink --follow
+aws logs tail /aws/lambda/url-shortener-infra-redirectLink --follow
+aws logs tail /aws/lambda/url-shortener-infra-adminLinks --follow</code></pre>
+      The --follow flag streams live logs. Press Ctrl+C to stop. Every print() statement in your Python code appears here. Full Python tracebacks for exceptions appear here too.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section" id="interview">
+  <div class="section-header"><div class="section-num">10</div><div class="section-title">Interview Master Checklist</div></div>
+  <div class="section-body">
+    <ul class="checklist">
+      <li><div class="check-box"></div><span class="phase-label">SETUP</span> AWS CLI installed — <span class="inline-code">aws sts get-caller-identity</span> returns your account ID</li>
+      <li><div class="check-box"></div><span class="phase-label">SETUP</span> Node 16+ and Python 3.9+ confirmed</li>
+      <li><div class="check-box"></div><span class="phase-label">SETUP</span> Repo cloned, <span class="inline-code">npm install</span> and <span class="inline-code">pip3 install boto3</span> done, in project root</li>
+      <li><div class="check-box"></div><span class="phase-label">INFRA</span> CloudFormation deployed with <span class="inline-code">CAPABILITY_NAMED_IAM</span> flag</li>
+      <li><div class="check-box"></div><span class="phase-label">INFRA</span> Stack outputs collected: ApiGatewayId, ApiGatewayUrl, S3BucketName, DynamoDBTableName, LambdaRoleArn</li>
+      <li><div class="check-box"></div><span class="phase-label">INFRA</span> DynamoDB table confirmed: <span class="inline-code">aws dynamodb list-tables</span></li>
+      <li><div class="check-box"></div><span class="phase-label">INFRA</span> S3 bucket confirmed: <span class="inline-code">aws s3 ls | grep url-shortener</span></li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> 3 ZIP packages created in /build: create_link.zip, redirect_link.zip, admin_links.zip</li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> ROLE_ARN variable populated from CloudFormation output</li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> All 3 Lambda functions created (or updated) successfully</li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> API Gateway integrations created for all 3 functions</li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> 3 routes created: POST /links, GET /{code}, GET /admin/links</li>
+      <li><div class="check-box"></div><span class="phase-label">BACKEND</span> Lambda invoke permissions granted to API Gateway for all 3 functions</li>
+      <li><div class="check-box"></div><span class="phase-label">FRONTEND</span> API_BASE_URL updated in app.js with real API Gateway URL</li>
+      <li><div class="check-box"></div><span class="phase-label">FRONTEND</span> API_BASE_URL updated in admin.js with real API Gateway URL</li>
+      <li><div class="check-box"></div><span class="phase-label">FRONTEND</span> DEMO_MODE: false set in both files</li>
+      <li><div class="check-box"></div><span class="phase-label">FRONTEND</span> Files synced to S3 with correct content types for HTML, JS, CSS</li>
+      <li><div class="check-box"></div><span class="phase-label">TEST</span> curl POST /links returns 201 with shortCode</li>
+      <li><div class="check-box"></div><span class="phase-label">TEST</span> curl -I GET /{code} returns 301 with correct Location header</li>
+      <li><div class="check-box"></div><span class="phase-label">TEST</span> curl GET /admin/links returns links array and statistics</li>
+      <li><div class="check-box"></div><span class="phase-label">TEST</span> DynamoDB scan shows test record with incremented click_count</li>
+      <li><div class="check-box"></div><span class="phase-label">TEST</span> Frontend loads, creates a real link, admin dashboard shows live data with no Demo Mode banner</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 11 -->
+<div class="section" id="talking">
+  <div class="section-header"><div class="section-num">11</div><div class="section-title">Talking Points for Interviewers</div></div>
+  <div class="section-body">
+    <div class="tips-grid">
+      <div class="tip-card">
+        <h4>Why Serverless / Lambda?</h4>
+        <p>No servers to provision or manage. Auto-scales from 0 to millions. Pay per invocation — free tier covers early traffic. Cold starts (~200ms) are the only trade-off, acceptable here since redirect traffic keeps functions warm.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Why DynamoDB over RDS?</h4>
+        <p>URL shorteners have one access pattern: look up by code. DynamoDB primary key lookup is O(1), single-digit milliseconds. No joins needed. On-demand billing handles variable traffic perfectly. SQL would be overkill.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Why API Gateway HTTP API not REST API?</h4>
+        <p>HTTP APIs are about 71% cheaper and lower latency. We only need basic routing and CORS — no usage plans, API keys, or request transformation that REST API provides.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Why CloudFormation over manual setup?</h4>
+        <p>Infrastructure as Code means reproducible, version-controlled, one-command deploy and teardown. No snowflake environments. Dev, staging, and production are guaranteed identical.</p>
+      </div>
+      <div class="tip-card">
+        <h4>How does collision avoidance work?</h4>
+        <p>Random 6-char Base62 = 56 billion possibilities. DynamoDB conditional write with attribute_not_exists makes it atomic. Up to 5 retries. Astronomically unlikely to need them at normal scale.</p>
+      </div>
+      <div class="tip-card">
+        <h4>How does click tracking work?</h4>
+        <p>DynamoDB atomic ADD — thread-safe, no lost counts under concurrent load. Fire-and-forget: redirect returns before the update completes so user latency is not affected.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Security considerations</h4>
+        <p>IAM least-privilege roles. URL validation via urlparse. Custom code regex. Conditional DynamoDB writes prevent overwrites. CORS configured. No secrets in code — env vars for table names.</p>
+      </div>
+      <div class="tip-card">
+        <h4>What would you add next?</h4>
+        <p>Custom domain via Route 53 and CloudFront for HTTPS. Link expiry using DynamoDB TTL attribute. API key authentication. Rate limiting per user. DELETE endpoint. Bulk link creation via CSV upload.</p>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:1.5rem">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-body"><strong>Golden interview rule — narrate everything as you type:</strong> Say out loud what you are doing and why at every step. "I am running CloudFormation first because it creates the DynamoDB table, IAM role, and API Gateway that Lambda needs — none of Phase 2 is possible without this." Silence looks nervous. Commentary shows mastery and architectural thinking. Interviewers want to see how you think, not just that you can type commands.</div>
+    </div>
+    <div class="callout tip" style="margin-top:1rem">
+      <div class="callout-icon">⏱️</div>
+      <div class="callout-body"><strong>Time estimate with all tools pre-installed:</strong> Setup 2 min → CloudFormation 3 min wait → Lambda deploy 3 min → Frontend 2 min → Testing 2 min → Total approximately 12 minutes. Practice until you can do it comfortably in under 15 minutes without referring to notes.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="footer">LinkForge Pro — Interview Redeployment Guide &nbsp;|&nbsp; AWS Lambda · API Gateway · DynamoDB · S3 · CloudFormation</div>
+</body>
+</html>

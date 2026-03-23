@@ -138,6 +138,133 @@ Resources:
             Action: s3:GetObject
             Resource: !Sub "${FrontendBucket.Arn}/*"
 
+  # Lambda Functions
+  CreateLinkFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-createLink"
+      Runtime: python3.9
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: create_link.lambda_handler
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+            return {"statusCode": 200, "body": "placeholder"}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref LinksTable
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  RedirectLinkFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-redirectLink"
+      Runtime: python3.9
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: redirect_link.lambda_handler
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+            return {"statusCode": 200, "body": "placeholder"}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref LinksTable
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  AdminLinksFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-adminLinks"
+      Runtime: python3.9
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Handler: admin_links.lambda_handler
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+            return {"statusCode": 200, "body": "placeholder"}
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref LinksTable
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # API Gateway Integrations
+  CreateLinkIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt CreateLinkFunction.Arn
+      PayloadFormatVersion: "2.0"
+
+  RedirectLinkIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt RedirectLinkFunction.Arn
+      PayloadFormatVersion: "2.0"
+
+  AdminLinksIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt AdminLinksFunction.Arn
+      PayloadFormatVersion: "2.0"
+
+  # API Gateway Routes
+  CreateLinkRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "POST /links"
+      Target: !Sub "integrations/${CreateLinkIntegration}"
+
+  RedirectLinkRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "GET /{code}"
+      Target: !Sub "integrations/${RedirectLinkIntegration}"
+
+  AdminLinksRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "GET /admin/links"
+      Target: !Sub "integrations/${AdminLinksIntegration}"
+
+  # Lambda permissions for API Gateway
+  CreateLinkPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref CreateLinkFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*"
+
+  RedirectLinkPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref RedirectLinkFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*"
+
+  AdminLinksPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AdminLinksFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*"
+
   # CloudWatch Log Groups for Lambda functions
   CreateLinkLogGroup:
     Type: AWS::Logs::LogGroup
